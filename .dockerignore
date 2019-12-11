@@ -1,0 +1,11 @@
+.*
+
+config/autoload/*.local.php
+data/cache/*
+
+vendor
+
+phpunit.xml
+docker-compose.yml
+Dockerfile
+README.md

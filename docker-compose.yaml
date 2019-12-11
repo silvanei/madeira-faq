@@ -1,0 +1,13 @@
+version: '3'
+services:
+  madeira-faq:
+    image: madeira-faq:latest
+    build: .
+    container_name: "madeira-faq"
+    environment:
+      - TZ=America/Sao_Paulo
+    restart: always
+    working_dir: /var/www/default
+    ports:
+      - "8080:80"
+      - "8081:443"
