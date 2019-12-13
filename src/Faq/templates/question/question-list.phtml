@@ -1,0 +1,28 @@
+<?php /** @var Faq\Entity\Question $question */ ?>
+<div class="panel panel-default">
+    <div class="panel-heading">Perguntas mais frequentes</div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Categoria</th>
+                <th>Titulo</th>
+                <th>Ação</th>
+            </tr>
+        </thead>
+        <tbody>
+        <?php foreach ($this->questions as $question): ?>
+            <tr>
+                <td><?= $question->id ?></td>
+                <td><?= $question->tag->title ?></td>
+                <td><?= $question->title ?></td>
+                <td class="text-right">
+                    <a href="<?= $this->url('admin.faq.question.edit', ['id' => $question->id]) ?>" class="btn btn-primary btn-sm">Editar</a>
+                    <a href="#" type="button" class="btn btn-danger btn-sm">Excluir</a>
+                </td>
+            </tr>
+        <?endforeach;?>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,69 @@
+<?php /** @var Faq\Entity\Question $question */ ?>
+<?php /** @var Faq\Form\QuestionForm $form */ ?>
+<div class="panel panel-default">
+    <div class="panel-heading">Perguntas mais frequentes</div>
+
+    <div class="panel-body">
+        <?php $this->form->prepare(); ?>
+        <?= $this->form()->openTag($form);?>
+            <?php $csrf = $form->get('question_csrf'); ?>
+            <?= $this->formElement($csrf) ?>
+            <?php foreach ($csrf->getMessages() as $message): ?>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-danger">
+                            <button data-dismiss="alert" class="close" type="button">×</button>
+                            <strong>Erro:</strong> <?php echo $message ?>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <? $tags_id = $form->get('tags_id'); ?>
+                    <? $tags_id->setAttribute('class', 'form-control input-block-level'); ?>
+                    <div class="form-group <?= (!empty($tags_id->getMessages()) ? 'has-error' : '')?>">
+                        <?= $this->formLabel($tags_id) ?>
+                        <?= $this->formElement($tags_id) ?>
+                        <?= $this->formElementErrors()->render($tags_id, ['class' => 'help-block list-unstyled']) ?>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <? $title = $form->get('title'); ?>
+                    <? $title->setAttribute('class', 'form-control input-block-level'); ?>
+                    <div class="form-group <?= (!empty($title->getMessages()) ? 'has-error' : '')?>">
+                        <?= $this->formLabel($title) ?>
+                        <?= $this->formElement($title) ?>
+                        <?= $this->formElementErrors()->render($title, ['class' => 'help-block list-unstyled']) ?>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <? $answer = $form->get('answer'); ?>
+                    <? $answer->setAttribute('class', 'form-control input-block-level'); ?>
+                    <div class="form-group <?= (!empty($answer->getMessages()) ? 'has-error' : '')?>">
+                        <?= $this->formLabel($answer) ?>
+                        <?= $this->formElement($answer) ?>
+                        <?= $this->formElementErrors()->render($answer, ['class' => 'help-block list-unstyled']) ?>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-group pull-right">
+                        <? $submit = $form->get('submit'); ?>
+                        <? $submit->setAttribute('class', 'btn-test'); ?>
+                        <?= $this->formButton($submit); ?>
+                    </div>
+
+                </div>
+            </div>
+        <?= $this->form()->closeTag(); ?>
+    </div>
+</div>

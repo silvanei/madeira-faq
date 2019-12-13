@@ -4,48 +4,53 @@ declare(strict_types=1);
 
 namespace Faq;
 
-/**
- * The configuration provider for the Faq module
- *
- * @see https://docs.zendframework.com/zend-component-installer/
- */
+use Faq\Driver\Repository\PdoQuestionRepositoryFactory;
+use Faq\Handler\QuestionEditHandler;
+use Faq\Handler\QuestionListHandler;
+use Faq\Repository\QuestionRepository;
+use Faq\UseCase\RegisterQuestions;
+use Zend\ServiceManager\AbstractFactory\ReflectionBasedAbstractFactory;
+
 class ConfigProvider
 {
     /**
-     * Returns the configuration array
-     *
-     * To add a bit of a structure, each section is defined in a separate
-     * method which returns an array with its configuration.
+     * @return array<array>
      */
-    public function __invoke() : array
+    public function __invoke(): array
     {
         return [
             'dependencies' => $this->getDependencies(),
-            'templates'    => $this->getTemplates(),
+            'templates' => $this->getTemplates(),
         ];
     }
 
     /**
-     * Returns the container dependencies
+     * @return array<array>
      */
-    public function getDependencies() : array
+    public function getDependencies(): array
     {
         return [
             'invokables' => [
             ],
-            'factories'  => [
+            'factories' => [
+                QuestionListHandler::class => ReflectionBasedAbstractFactory::class,
+                QuestionEditHandler::class => ReflectionBasedAbstractFactory::class,
+                RegisterQuestions::class => ReflectionBasedAbstractFactory::class,
+                QuestionRepository::class => PdoQuestionRepositoryFactory::class,
             ],
         ];
     }
 
     /**
-     * Returns the templates configuration
+     * @return array<array>
      */
-    public function getTemplates() : array
+    public function getTemplates(): array
     {
         return [
             'paths' => [
-                'faq'    => [__DIR__ . '/../templates/'],
+                'faq' => [__DIR__ . '/../templates/'],
+                'error' => [__DIR__ . '/../templates/error'],
+                'layout' => [__DIR__ . '/../templates/layout'],
             ],
         ];
     }

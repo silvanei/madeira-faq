@@ -19,8 +19,24 @@ return [
             // Fully\Qualified\InterfaceName::class => Fully\Qualified\ClassName::class,
         ],
         // Use 'factories' for services provided by callbacks/factory classes.
-        'factories'  => [
+        'factories' => [
             // Fully\Qualified\ClassName::class => Fully\Qualified\FactoryName::class,
+            'translator' => \Zend\I18n\Translator\TranslatorServiceFactory::class,
+        ],
+    ],
+    'translator' => [
+        'locale' => 'pt_BR',
+        'translation_file_patterns' => [
+            [
+                'type' => 'gettext',
+                'base_dir' => __DIR__ . '/../../data/language',
+                'pattern' => '%s.mo',
+            ],
+            [
+                'type' => 'phparray',
+                'base_dir' => __DIR__ . '/../../data/language',
+                'pattern' => '%s.php'
+            ],
         ],
     ],
 ];

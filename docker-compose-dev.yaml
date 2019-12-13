@@ -25,6 +25,6 @@ services:
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=123456
-      - MYSQL_DATABASE=madeira-faq
+      - MYSQL_DATABASE=madeira_faq
     ports:
       - 3307:3306

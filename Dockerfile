@@ -35,6 +35,7 @@ RUN set -e \
     && docker-php-ext-install \
         pdo_mysql \
         opcache \
+        intl \
     && pecl install \
         xdebug \
     && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
