@@ -47,42 +47,16 @@ class HomePageHandler implements RequestHandlerInterface
             );
         }
 
-        $data = [];
-
-        switch ($this->containerName) {
-            case 'Aura\Di\Container':
-                $data['containerName'] = 'Aura.Di';
-                $data['containerDocs'] = 'http://auraphp.com/packages/2.x/Di.html';
-                break;
-            case 'Pimple\Container':
-                $data['containerName'] = 'Pimple';
-                $data['containerDocs'] = 'https://pimple.symfony.com/';
-                break;
-            case 'Zend\ServiceManager\ServiceManager':
-                $data['containerName'] = 'Zend Servicemanager';
-                $data['containerDocs'] = 'https://docs.zendframework.com/zend-servicemanager/';
-                break;
-            case 'Auryn\Injector':
-                $data['containerName'] = 'Auryn';
-                $data['containerDocs'] = 'https://github.com/rdlowrey/Auryn';
-                break;
-            case 'Symfony\Component\DependencyInjection\ContainerBuilder':
-                $data['containerName'] = 'Symfony DI Container';
-                $data['containerDocs'] = 'https://symfony.com/doc/current/service_container.html';
-                break;
-            case 'Zend\DI\Config\ContainerWrapper':
-            case 'DI\Container':
-                $data['containerName'] = 'PHP-DI';
-                $data['containerDocs'] = 'http://php-di.org';
-                break;
-        }
-
-        $data['routerName'] = 'FastRoute';
-        $data['routerDocs'] = 'https://github.com/nikic/FastRoute';
-
-        $data['templateName'] = 'Zend View';
-        $data['templateDocs'] = 'https://docs.zendframework.com/zend-view/';
-
-        return new HtmlResponse($this->template->render('app::home-page', $data));
+        return new HtmlResponse($this->template->render(
+            'app::home-page',
+            [
+                'containerName' => 'Zend Servicemanager',
+                'containerDocs' => 'https://docs.zendframework.com/zend-servicemanager/',
+                'routerName' => 'FastRoute',
+                'routerDocs' => 'https://github.com/nikic/FastRoute',
+                'templateName' => 'Zend View',
+                'templateDocs' => 'https://docs.zendframework.com/zend-view/'
+            ]
+        ));
     }
 }

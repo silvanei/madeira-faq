@@ -14,4 +14,12 @@
             <directory suffix=".php">./src</directory>
         </whitelist>
     </filter>
+
+    <logging>
+        <log type="coverage-html" target="test/_output/coverage"/>
+        <log type="coverage-xml" target="test/_output/logs/coverage"/>
+        <log type="coverage-clover" target="test/_output/logs/clover.xml"/>
+        <log type="coverage-crap4j" target="test/_output/logs/crap4j.xml"/>
+        <log type="junit" target="test/_output/logs/junit.xml"/>
+    </logging>
 </phpunit>

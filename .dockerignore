@@ -9,3 +9,4 @@ phpunit.xml
 docker-compose.yml
 Dockerfile
 README.md
+*.bak

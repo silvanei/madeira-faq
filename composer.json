@@ -38,7 +38,7 @@
         "forum": "https://discourse.zendframework.com/c/questions/expressive"
     },
     "require": {
-        "php": "^7.1",
+        "php": "^7.4",
         "zendframework/zend-component-installer": "^2.1.1",
         "zendframework/zend-config-aggregator": "^1.0",
         "zendframework/zend-diactoros": "^1.7.1 || ^2.0",
@@ -51,16 +51,18 @@
     },
     "require-dev": {
         "filp/whoops": "^2.1.12",
+        "phpmetrics/phpmetrics": "^2.4",
         "phpstan/phpstan": "^0.12.2",
         "phpunit/phpunit": "^7.0.1",
         "roave/security-advisories": "dev-master",
         "squizlabs/php_codesniffer": "^3.5.3",
-        "zendframework/zend-expressive-tooling": "^1.0",
-        "zfcampus/zf-development-mode": "^3.1"
+        "zendframework/zend-expressive-tooling": "^1.3",
+        "zfcampus/zf-development-mode": "^3.2.0"
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/App/src/"
+            "App\\": "src/App/src/",
+            "Faq\\": "src/Faq/src/"
         }
     },
     "autoload-dev": {
@@ -79,14 +81,16 @@
         "check": [
             "@phpstan",
             "@cs-check",
-            "@test"
+            "@test-coverage",
+            "@phpmetrics"
         ],
         "clear-config-cache": "php bin/clear-config-cache.php",
         "cs-check": "phpcs",
         "cs-fix": "phpcbf",
-        "phpstan": "phpstan analyse --level 7 src/*/src --ansi",
+        "phpstan": "phpstan analyse --level max src --ansi",
+        "phpmetrics": "phpmetrics --report-html=test/_output/phpmetrics --junit=test/_output/logs/junit.xml src,composer.json,composer.lock",
         "serve": "php -S 0.0.0.0:8080 -t public/",
         "test": "phpunit --colors=always",
-        "test-coverage": "phpunit --colors=always --coverage-clover clover.xml"
+        "test-coverage": "phpunit --colors=always --coverage-clover test/_output/clover.xml"
     }
 }
