@@ -9,6 +9,10 @@ services:
       - DEBUG=1
       - COMPOSER_INSTAL=1
       - COMPOSER_INSTALL_PARANS="--prefer-dist"
+      - PHP_OPCACHE_VALIDATE_TIMESTAMPS=1
+      - DB_DSN=mysql:dbname=madeira_faq;host=mysql-db;port:3306
+      - DB_USERNAME=root
+      - DB_PASSWORD=123456
     restart: always
     working_dir: /var/www/default
     ports:

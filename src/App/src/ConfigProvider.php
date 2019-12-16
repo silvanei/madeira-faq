@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App;
 
+use Zend\ServiceManager\AbstractFactory\ReflectionBasedAbstractFactory;
+
 /**
  * The configuration provider for the App module
  *
@@ -32,7 +34,7 @@ class ConfigProvider
                 Handler\PingHandler::class => Handler\PingHandler::class,
             ],
             'factories' => [
-                Handler\HomePageHandler::class => Handler\HomePageHandlerFactory::class,
+                Handler\HomePageHandler::class => ReflectionBasedAbstractFactory::class,
             ],
         ];
     }

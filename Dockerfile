@@ -16,6 +16,7 @@ ENV PHP_OPCACHE_VALIDATE_TIMESTAMPS=0 \
 
 COPY docker/php/999-custom.ini /usr/local/etc/php/conf.d/999-custom.ini
 COPY docker/supervisor/supervisord.conf /etc/supervisord.conf
+COPY docker/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY docker/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
 COPY docker/nginx/ssl/cert.crt /usr/local/nginx/ssl/cert.crt
 COPY docker/nginx/ssl/cert.key /usr/local/nginx/ssl/cert.key
@@ -52,6 +53,9 @@ RUN set -e \
 
 # forward request and error logs to docker log collector
 RUN ln -sf /dev/stdout /var/log/nginx/access.log && ln -sf /dev/stderr /var/log/nginx/error.log
+
+# Variáveis de ambiente na configuração do container
+RUN sed -e 's/;clear_env = no/clear_env = no/' -i /usr/local/etc/php-fpm.d/www.conf
 
 COPY . /var/www/default
 

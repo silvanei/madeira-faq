@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Faq;
 
 use Faq\Driver\Repository\PdoQuestionRepositoryFactory;
-use Faq\Handler\FaqAnswerHandler;
 use Faq\Handler\FaqQuestionHandler;
 use Faq\Handler\QuestionDeleteHandler;
 use Faq\Handler\QuestionEditHandler;

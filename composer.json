@@ -40,6 +40,7 @@
     "require": {
         "php": "^7.4",
         "ext-pdo": "*",
+        "robmorgan/phinx": "^0.11.3",
         "slim/flash": "^0.4.0",
         "zendframework/zend-component-installer": "^2.1.1",
         "zendframework/zend-config-aggregator": "^1.0",
@@ -97,6 +98,7 @@
         "phpmetrics": "phpmetrics --report-html=test/_output/phpmetrics --junit=test/_output/logs/junit.xml src,composer.json,composer.lock",
         "serve": "php -S 0.0.0.0:8080 -t public/",
         "test": "phpunit --colors=always",
-        "test-coverage": "phpunit --colors=always --coverage-clover test/_output/clover.xml"
+        "test-coverage": "phpunit --colors=always --coverage-clover test/_output/clover.xml",
+        "phinx": "vendor/bin/phinx --ansi"
     }
 }

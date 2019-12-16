@@ -67,7 +67,7 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     // - route-based validation
     // - etc.
 
-    $app->pipe(SlimFlashMiddleware::class);
+    $app->pipe('/admin/faq', SlimFlashMiddleware::class);
     // Register the dispatch middleware in the middleware pipeline
     $app->pipe(DispatchMiddleware::class);
 
