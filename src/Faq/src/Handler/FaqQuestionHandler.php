@@ -8,12 +8,12 @@ use Faq\UseCase\RegisterQuestions;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Slim\Flash\Messages;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
-class QuestionListHandler implements RequestHandlerInterface
+class FaqQuestionHandler implements RequestHandlerInterface
 {
+
     private TemplateRendererInterface $renderer;
     private RegisterQuestions $registerQuestions;
 
@@ -25,16 +25,24 @@ class QuestionListHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        /** @var Messages $flash */
-        $flash = $request->getAttribute('flash');
-        $messages = $flash->getMessages();
+        $template = 'faq::faq/question';
+
+        $search = $request->getQueryParams()['search'] ?? '';
+        $tag = $request->getAttribute('tag', '');
+        $title = $request->getAttribute('title', '');
+
+        if (!empty($search) || !empty($title)) {
+            $template = 'faq::faq/answer';
+        }
 
         return new HtmlResponse(
             $this->renderer->render(
-                'faq::question/question-list',
+                $template,
                 [
-                    'messages' => $messages,
-                    'questions' => $this->registerQuestions->findAll()
+                    'search' => $search,
+                    'selectedTag' => $tag,
+                    'tags' => $this->registerQuestions->findAllTags(),
+                    'questions' => $this->registerQuestions->findAll($search, $tag, $title)
                 ]
             )
         );

@@ -5,8 +5,12 @@ declare(strict_types=1);
 namespace Faq;
 
 use Faq\Driver\Repository\PdoQuestionRepositoryFactory;
+use Faq\Handler\FaqAnswerHandler;
+use Faq\Handler\FaqQuestionHandler;
+use Faq\Handler\QuestionDeleteHandler;
 use Faq\Handler\QuestionEditHandler;
 use Faq\Handler\QuestionListHandler;
+use Faq\Handler\QuestionNewHandler;
 use Faq\Repository\QuestionRepository;
 use Faq\UseCase\RegisterQuestions;
 use Zend\ServiceManager\AbstractFactory\ReflectionBasedAbstractFactory;
@@ -33,8 +37,11 @@ class ConfigProvider
             'invokables' => [
             ],
             'factories' => [
+                FaqQuestionHandler::class => ReflectionBasedAbstractFactory::class,
                 QuestionListHandler::class => ReflectionBasedAbstractFactory::class,
+                QuestionNewHandler::class => ReflectionBasedAbstractFactory::class,
                 QuestionEditHandler::class => ReflectionBasedAbstractFactory::class,
+                QuestionDeleteHandler::class => ReflectionBasedAbstractFactory::class,
                 RegisterQuestions::class => ReflectionBasedAbstractFactory::class,
                 QuestionRepository::class => PdoQuestionRepositoryFactory::class,
             ],

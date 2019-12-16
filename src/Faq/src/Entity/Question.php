@@ -16,6 +16,6 @@ final class Question
     public string $answer;
 
     public DateTimeImmutable $created_at;
-    public DateTimeImmutable $update_at;
+    public DateTimeImmutable $updated_at;
     public bool $enabled;
 }

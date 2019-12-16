@@ -1,0 +1,33 @@
+<?php /** @var Faq\Entity\Question $question */ ?>
+
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <form action="<?= $this->url('faq.question') ?>" method="get">
+            <div class="input-group input-group-lg">
+                <span class="input-group-addon" id="sizing-addon1">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                </span>
+                <input name="search" type="text" value="<?= $this->search; ?>" minlength="3" autocomplete="off" autofocus class="form-control" placeholder="Search" aria-label="Search" aria-describedby="sizing-addon1">
+            </div>
+        </form>
+    </div>
+</div>
+
+<br>
+<br>
+
+<div class="row">
+    <div class="col-md-12">
+        <?php foreach ($this->questions as $question): ?>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h4 class="panel-title"><?= $question->title?></h4>
+                </div>
+                <div class="panel-body">
+                    <h4><small><?= $question->tag->title?></small></h4>
+                    <?= $question->answer; ?>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</div>

@@ -1,14 +1,32 @@
 <?php /** @var Faq\Entity\Question $question */ ?>
+
+<?php foreach ($this->messages as $key => $message): ?>
+    <div class="row">
+        <?php foreach ($message as $text): ?>
+        <div class="col-md-12">
+            <div class="alert alert-<?= $key; ?>">
+                <button data-dismiss="alert" class="close" type="button">×</button>
+                <?php echo $text ?>
+            </div>
+        </div>
+        <?php endforeach; ?>
+    </div>
+<?php endforeach; ?>
+
 <div class="panel panel-default">
-    <div class="panel-heading">Perguntas mais frequentes</div>
+    <div class="panel-heading">
+        Perguntas frequentes
+    </div>
 
     <table class="table">
         <thead>
             <tr>
                 <th>#</th>
                 <th>Categoria</th>
-                <th>Titulo</th>
-                <th>Ação</th>
+                <th>Pergunta</th>
+                <th class="text-right">
+                    <a href="<?= $this->url('admin.faq.question.new') ?>" type="button" class="btn btn-primary btn-sm">Adicionar</a>
+                </th>
             </tr>
         </thead>
         <tbody>
@@ -19,10 +37,30 @@
                 <td><?= $question->title ?></td>
                 <td class="text-right">
                     <a href="<?= $this->url('admin.faq.question.edit', ['id' => $question->id]) ?>" class="btn btn-primary btn-sm">Editar</a>
-                    <a href="#" type="button" class="btn btn-danger btn-sm">Excluir</a>
+                    <button
+                        data-id="<?= $question->id; ?>"
+                        data-href="<?= $this->url('admin.faq.question.delete'); ?>"
+                        class="js-btn-delete btn btn-danger btn-sm"
+                    >Excluir</button>
                 </td>
             </tr>
         <?endforeach;?>
         </tbody>
     </table>
 </div>
+
+<!-- Modal confirm -->
+<div class="modal" id="confirmModal" style="display: none; z-index: 1050;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body" id="confirmMessage">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="confirmOk">Ok</button>
+                <button type="button" class="btn btn-default" id="confirmCancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php $this->inlineScript()->prependFile('/js/index.js'); ?>

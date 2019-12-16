@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Faq\Form;
 
+use Faq\Entity\Tag;
 use Zend\Filter\StringTrim;
 use Zend\Filter\StripTags;
+use Zend\Filter\ToInt;
 use Zend\Form\Element\Csrf;
 use Zend\Form\Element\Select;
 use Zend\Form\Element\Submit;
@@ -26,6 +28,8 @@ class QuestionForm extends Form
     public function __construct(string $name = 'question', array $options = [])
     {
         parent::__construct($name, $options);
+
+        $tags = array_map(fn(Tag $tag) => ['value' => $tag->id, 'label' => $tag->title], $options['tags']);
 
         $this->add(
             [
@@ -52,7 +56,7 @@ class QuestionForm extends Form
                         'class' => 'control-label'
                     ],
                     'empty_option' => 'Selecione uma Categoria',
-                    'value_options' => []
+                    'value_options' => $tags
 
                 ]
             ]
@@ -103,6 +107,16 @@ class QuestionForm extends Form
     private function inputFilter(): InputFilterInterface
     {
         $inputFilter = new InputFilter();
+
+        $inputFilter->add(
+            [
+                'name' => 'tags_id',
+                'required' => true,
+                'filters' => [
+                    ['name' => ToInt::class],
+                ]
+            ]
+        );
 
         $inputFilter->add(
             [

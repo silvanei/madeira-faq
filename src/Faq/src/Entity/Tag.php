@@ -13,6 +13,11 @@ final class Tag
     public string $title_slug;
 
     public DateTimeImmutable $created_at;
-    public DateTimeImmutable $update_at;
+    public DateTimeImmutable $updated_at;
     public bool $enabled;
+
+    public function __toString()
+    {
+        return $this->title;
+    }
 }

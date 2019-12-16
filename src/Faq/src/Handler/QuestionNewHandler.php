@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Faq\Handler;
 
+use Faq\Entity\Question;
 use Faq\Entity\Tag;
 use Faq\Form\QuestionForm;
 use Faq\UseCase\RegisterQuestions;
@@ -16,7 +17,7 @@ use Zend\Diactoros\Response\RedirectResponse;
 use Zend\Expressive\Helper\UrlHelper;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
-class QuestionEditHandler implements RequestHandlerInterface
+class QuestionNewHandler implements RequestHandlerInterface
 {
     private UrlHelper $urlHelper;
     private TemplateRendererInterface $renderer;
@@ -34,36 +35,21 @@ class QuestionEditHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        $id = (int)$request->getAttribute('id');
-
         $form = new QuestionForm(
             'question',
             ['tags' => $this->registerQuestions->findAllTags()]
         );
 
-        $question = $this->registerQuestions->find($id);
-
         /** @var Messages $flash */
         $flash = $request->getAttribute('flash');
 
-        if (is_null($question)) {
-            $flash->addMessage('danger', sprintf('Pergunta com ID: %s não encontrada', $id));
-            return new RedirectResponse($this->urlHelper->generate('admin.faq.question.list'));
-        }
-
         if ($request->getMethod() === 'GET') {
-            $form->setData([
-                'tags_id' => $question->tag->id,
-                'title' => $question->title,
-                'answer' => $question->answer,
-            ]);
-
             return new HtmlResponse(
                 $this->renderer->render(
                     'faq::question/question-form',
                     [
-                        'titleForm' => 'Editar: Perguntas mais frequentes',
-                        'form' => $form
+                        'titleForm' => 'Adicionar: Perguntas mais frequentes',
+                        'form' => $form,
                     ]
                 )
             );
@@ -75,7 +61,7 @@ class QuestionEditHandler implements RequestHandlerInterface
                 $this->renderer->render(
                     'faq::question/question-form',
                     [
-                        'titleForm' => 'Editar: Perguntas mais frequentes',
+                        'titleForm' => 'Adicionar: Perguntas mais frequentes',
                         'form' => $form
                     ]
                 )
@@ -87,13 +73,15 @@ class QuestionEditHandler implements RequestHandlerInterface
         $tag = new Tag();
         $tag->id = $validData['tags_id'];
 
-        $question->title = $validData['title'];
-        $question->answer = $validData['answer'];
+        $question = new Question();
         $question->tag = $tag;
+        $question->title = $validData['title'];
+        $question->title_slug = $validData['title'];
+        $question->answer = $validData['answer'];
 
-        $this->registerQuestions->update($question);
+        $this->registerQuestions->store($question);
 
-        $flash->addMessage('success', 'Pergunta atualizada com sucesso');
+        $flash->addMessage('success', 'Pergunta adicionada com sucesso');
         return new RedirectResponse($this->urlHelper->generate('admin.faq.question.list'));
     }
 }
