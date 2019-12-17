@@ -29,12 +29,18 @@ class QuestionListHandler implements RequestHandlerInterface
         $flash = $request->getAttribute('flash');
         $messages = $flash->getMessages();
 
+        $search = $request->getQueryParams()['search'] ?? '';
+        $tag = $request->getQueryParams()['tag'] ?? '';
+
         return new HtmlResponse(
             $this->renderer->render(
                 'faq::question/question-list',
                 [
                     'messages' => $messages,
-                    'questions' => $this->registerQuestions->findAll()
+                    'search' => $search,
+                    'tag' => $tag,
+                    'tags' => $this->registerQuestions->findAllTags(),
+                    'questions' => $this->registerQuestions->findAll($search, $tag)
                 ]
             )
         );

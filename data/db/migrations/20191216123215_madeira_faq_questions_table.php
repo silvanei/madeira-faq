@@ -22,7 +22,7 @@ class MadeiraFaqQuestionsTable extends AbstractMigration
               KEY fk_questions_tags_idx (tags_id),
               FULLTEXT KEY FULLTEXT_QUESTIONS (title,answer),
               CONSTRAINT fk_questions_tags FOREIGN KEY (tags_id) REFERENCES tags (id)
-            ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+            ) ENGINE=InnoDB
         ");
     }
 

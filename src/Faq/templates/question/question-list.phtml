@@ -13,6 +13,34 @@
     </div>
 <?php endforeach; ?>
 
+<form action="<?= $this->url('admin.faq.question.list'); ?>" method="get">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="form-group ">
+                <label class="control-label" for="tag">Categoria</label>
+                <select name="tag" id="tag" class="form-control">
+                    <option value="">Selecione uma Categoria</option>
+                    <?php foreach ($this->tags as $tag):  ?>
+                        <option value="<?= $tag->title_slug; ?>" <?= ($tag->title_slug === $this->tag) ? 'selected' : ''; ?> ><?= $tag->title; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <div class="form-group ">
+                <label class="control-label" for="search">Pergunta/Resposta</label>
+                <input type="text" name="search" id="search" class="form-control" value="<?= $this->search; ?>">
+            </div>
+        </div>
+        <div class="col-md-2">
+            <div class="form-group">
+                <label class="control-label" for="submit">&nbsp;</label>
+                <button type="submit" name="submit" id="submit" class="btn btn-primary form-control">Filtrar</button>
+            </div>
+        </div>
+    </div>
+</form>
+
 <div class="panel panel-default">
     <div class="panel-heading">
         Perguntas frequentes
