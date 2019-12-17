@@ -11,7 +11,7 @@ use Psr\Http\Server\RequestHandlerInterface;
 use Zend\Diactoros\Response\HtmlResponse;
 use Zend\Expressive\Template\TemplateRendererInterface;
 
-class FaqQuestionHandler implements RequestHandlerInterface
+class FaqHandler implements RequestHandlerInterface
 {
 
     private TemplateRendererInterface $renderer;

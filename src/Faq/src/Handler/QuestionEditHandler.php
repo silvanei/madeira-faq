@@ -58,28 +58,12 @@ class QuestionEditHandler implements RequestHandlerInterface
                 'answer' => $question->answer,
             ]);
 
-            return new HtmlResponse(
-                $this->renderer->render(
-                    'faq::question/question-form',
-                    [
-                        'titleForm' => 'Editar: Perguntas mais frequentes',
-                        'form' => $form
-                    ]
-                )
-            );
+            return $this->createHtmlResponse($form);
         }
 
         $form->setData((array)$request->getParsedBody());
         if (!$form->isValid()) {
-            return new HtmlResponse(
-                $this->renderer->render(
-                    'faq::question/question-form',
-                    [
-                        'titleForm' => 'Editar: Perguntas mais frequentes',
-                        'form' => $form
-                    ]
-                )
-            );
+            return $this->createHtmlResponse($form);
         }
 
         $validData = (array)$form->getData();
@@ -95,5 +79,22 @@ class QuestionEditHandler implements RequestHandlerInterface
 
         $flash->addMessage('success', 'Pergunta atualizada com sucesso');
         return new RedirectResponse($this->urlHelper->generate('admin.faq.question.list'));
+    }
+
+    /**
+     * @param QuestionForm $form
+     * @return HtmlResponse
+     */
+    private function createHtmlResponse(QuestionForm $form): HtmlResponse
+    {
+        return new HtmlResponse(
+            $this->renderer->render(
+                'faq::question/question-form',
+                [
+                    'titleForm' => 'Editar: Perguntas mais frequentes',
+                    'form' => $form
+                ]
+            )
+        );
     }
 }

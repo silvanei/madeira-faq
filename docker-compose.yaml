@@ -6,8 +6,29 @@ services:
     container_name: "madeira-faq"
     environment:
       - TZ=America/Sao_Paulo
+      - DEBUG=1
+      - COMPOSER_INSTAL=1
+      - COMPOSER_INSTALL_PARANS="--prefer-dist"
+      - PHP_OPCACHE_VALIDATE_TIMESTAMPS=1
+      - DB_DSN=mysql:dbname=madeira_faq;host=mysql-db;port:3306
+      - DB_USERNAME=root
+      - DB_PASSWORD=123456
     restart: always
     working_dir: /var/www/default
     ports:
       - "8080:80"
       - "8081:443"
+    volumes:
+      - ./:/var/www/default
+    depends_on:
+      - mysql-db
+  mysql-db:
+    image: mysql:8.0.18
+    container_name: "madeira-faq-mysql"
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456
+      - MYSQL_DATABASE=madeira_faq
+    ports:
+      - 3307:3306

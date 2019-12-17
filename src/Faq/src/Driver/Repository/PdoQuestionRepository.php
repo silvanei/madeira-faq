@@ -20,7 +20,6 @@ class PdoQuestionRepository implements QuestionRepository
         $this->pdo = $pdo;
     }
 
-
     /**
      * @param string $search
      * @param string $tag
@@ -70,7 +69,7 @@ class PdoQuestionRepository implements QuestionRepository
         $stmt->execute($parameters);
 
         foreach ((array)$stmt->fetchAll(PDO::FETCH_ASSOC) as $row) {
-            $allQuestions[] = $this->rowToquestion($row);
+            $allQuestions[] = $this->questionMap($row);
         }
 
         return $allQuestions;
@@ -145,7 +144,7 @@ class PdoQuestionRepository implements QuestionRepository
             return null;
         }
 
-        return $this->rowToquestion($row);
+        return $this->questionMap($row);
     }
 
     /**
@@ -219,7 +218,7 @@ class PdoQuestionRepository implements QuestionRepository
      * @return Question
      * @throws Exception
      */
-    private function rowToquestion(array $row): Question
+    private function questionMap(array $row): Question
     {
         $tag = new Tag();
         $tag->id = (int)$row['tag_id'];

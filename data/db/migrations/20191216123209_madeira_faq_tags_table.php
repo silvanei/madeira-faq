@@ -1,5 +1,7 @@
 <?php
 
+namespace Db\Migrations;
+
 use Phinx\Migration\AbstractMigration;
 
 class MadeiraFaqTagsTable extends AbstractMigration

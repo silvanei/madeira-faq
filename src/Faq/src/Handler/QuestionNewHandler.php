@@ -44,28 +44,12 @@ class QuestionNewHandler implements RequestHandlerInterface
         $flash = $request->getAttribute('flash');
 
         if ($request->getMethod() === 'GET') {
-            return new HtmlResponse(
-                $this->renderer->render(
-                    'faq::question/question-form',
-                    [
-                        'titleForm' => 'Adicionar: Perguntas mais frequentes',
-                        'form' => $form,
-                    ]
-                )
-            );
+            return $this->createHtmlResponse($form);
         }
 
         $form->setData((array)$request->getParsedBody());
         if (!$form->isValid()) {
-            return new HtmlResponse(
-                $this->renderer->render(
-                    'faq::question/question-form',
-                    [
-                        'titleForm' => 'Adicionar: Perguntas mais frequentes',
-                        'form' => $form
-                    ]
-                )
-            );
+            return $this->createHtmlResponse($form);
         }
 
         $validData = (array)$form->getData();
@@ -83,5 +67,22 @@ class QuestionNewHandler implements RequestHandlerInterface
 
         $flash->addMessage('success', 'Pergunta adicionada com sucesso');
         return new RedirectResponse($this->urlHelper->generate('admin.faq.question.list'));
+    }
+
+    /**
+     * @param QuestionForm $form
+     * @return HtmlResponse
+     */
+    private function createHtmlResponse(QuestionForm $form): HtmlResponse
+    {
+        return new HtmlResponse(
+            $this->renderer->render(
+                'faq::question/question-form',
+                [
+                    'titleForm' => 'Adicionar: Perguntas mais frequentes',
+                    'form' => $form,
+                ]
+            )
+        );
     }
 }

@@ -21,10 +21,9 @@
         <?php foreach ($this->questions as $question): ?>
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h4 class="panel-title"><?= $question->title?></h4>
+                    <p class="panel-title"><?= $question->title?> - <small><?= $question->tag->title?></small></p>
                 </div>
                 <div class="panel-body">
-                    <h4><small><?= $question->tag->title?></small></h4>
                     <?= $question->answer; ?>
                 </div>
             </div>

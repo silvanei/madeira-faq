@@ -46,6 +46,7 @@ final class RegisterQuestions
 
     public function store(Question $question): ?Question
     {
+        $question->title_slug = (string)new Slug($question->title);
         $question->created_at = new DateTimeImmutable();
         $question->updated_at = new DateTimeImmutable();
         $question->enabled = true;

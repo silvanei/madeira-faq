@@ -67,3 +67,7 @@
         <?= $this->form()->closeTag(); ?>
     </div>
 </div>
+<?php $this->inlineScript()
+    ->prependFile('https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js')
+    ->prependFile('/js/question-form.js');
+?>

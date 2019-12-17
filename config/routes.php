@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Faq\Handler\FaqQuestionHandler;
+use Faq\Handler\FaqHandler;
 use Faq\Handler\QuestionDeleteHandler;
 use Faq\Handler\QuestionEditHandler;
 use Faq\Handler\QuestionListHandler;
@@ -15,9 +15,9 @@ return function (Application $app, MiddlewareFactory $factory, ContainerInterfac
     $app->get('/', App\Handler\HomePageHandler::class, 'home');
     $app->get('/api/ping', App\Handler\PingHandler::class, 'api.ping');
 
-    $app->get('/faq', FaqQuestionHandler::class, 'faq.question');
-    $app->get('/faq/{tag}', FaqQuestionHandler::class, 'faq.question.tag');
-    $app->get('/faq/{tag}/{title}', FaqQuestionHandler::class, 'faq.answer');
+    $app->get('/faq', FaqHandler::class, 'faq.question');
+    $app->get('/faq/{tag}', FaqHandler::class, 'faq.question.tag');
+    $app->get('/faq/{tag}/{title}', FaqHandler::class, 'faq.answer');
     $app->get('/admin/faq/question', QuestionListHandler::class, 'admin.faq.question.list');
     $app->route('/admin/faq/question/new', QuestionNewHandler::class, ['GET', 'POST'], 'admin.faq.question.new');
     $app->route('/admin/faq/question/delete', QuestionDeleteHandler::class, ['POST'], 'admin.faq.question.delete');

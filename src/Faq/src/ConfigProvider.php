@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Faq;
 
 use Faq\Driver\Repository\PdoQuestionRepositoryFactory;
-use Faq\Handler\FaqQuestionHandler;
+use Faq\Handler\FaqHandler;
 use Faq\Handler\QuestionDeleteHandler;
 use Faq\Handler\QuestionEditHandler;
 use Faq\Handler\QuestionListHandler;
@@ -36,7 +36,7 @@ class ConfigProvider
             'invokables' => [
             ],
             'factories' => [
-                FaqQuestionHandler::class => ReflectionBasedAbstractFactory::class,
+                FaqHandler::class => ReflectionBasedAbstractFactory::class,
                 QuestionListHandler::class => ReflectionBasedAbstractFactory::class,
                 QuestionNewHandler::class => ReflectionBasedAbstractFactory::class,
                 QuestionEditHandler::class => ReflectionBasedAbstractFactory::class,

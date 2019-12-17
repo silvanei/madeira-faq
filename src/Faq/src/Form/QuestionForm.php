@@ -80,6 +80,7 @@ class QuestionForm extends Form
                 'type' => Textarea::class,
                 'name' => 'answer',
                 'attributes' => [
+                    'id' => 'answer',
                     'rows' => '10',
                 ],
                 'options' => [
