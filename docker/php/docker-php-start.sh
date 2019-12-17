@@ -20,4 +20,4 @@ if [ "$COMPOSER_INSTALL" = "1" ]; then
 fi
 
 echo "Application Start!!!!"
-exec /usr/bin/supervisord -n -c /etc/supervisord.conf
+exec php-fpm

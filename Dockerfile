@@ -15,11 +15,6 @@ ENV PHP_OPCACHE_VALIDATE_TIMESTAMPS=0 \
     TZ="America/Sao_Paulo"
 
 COPY docker/php/999-custom.ini /usr/local/etc/php/conf.d/999-custom.ini
-COPY docker/supervisor/supervisord.conf /etc/supervisord.conf
-COPY docker/nginx/nginx.conf /etc/nginx/nginx.conf
-COPY docker/nginx/conf.d/default.conf /etc/nginx/conf.d/default.conf
-COPY docker/nginx/ssl/cert.crt /usr/local/nginx/ssl/cert.crt
-COPY docker/nginx/ssl/cert.key /usr/local/nginx/ssl/cert.key
 
 RUN set -e \
     && apk update --no-cache \
@@ -29,16 +24,12 @@ RUN set -e \
     && apk add --no-cache g++=8.3.0-r0 \
     && apk add --no-cache make=4.2.1-r2 \
     && apk add --no-cache autoconf=2.69-r2 \
-    && apk add --no-cache supervisor=3.3.5-r0 \
-    && apk add --no-cache nginx=1.16.1-r1 \
-    && mkdir -p /run/nginx \
     # Dependencias php
     && docker-php-ext-install \
         pdo_mysql \
         opcache \
         intl \
-    && pecl install \
-        xdebug \
+    && pecl install xdebug \
     && php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && php composer-setup.php \
     && php -r "unlink('composer-setup.php');" \
@@ -51,17 +42,12 @@ RUN set -e \
     && rm -rf /var/cache/* \
     && rm -Rf /tmp/*
 
-# forward request and error logs to docker log collector
-RUN ln -sf /dev/stdout /var/log/nginx/access.log && ln -sf /dev/stderr /var/log/nginx/error.log
-
 # Variáveis de ambiente na configuração do container
 RUN sed -e 's/;clear_env = no/clear_env = no/' -i /usr/local/etc/php-fpm.d/www.conf
 
 COPY . /var/www/default
 
 WORKDIR /var/www/default
-
-EXPOSE 80 443
 
 COPY docker/php/docker-php-start.sh /usr/local/bin/docker-php-start
 RUN ["chmod", "+x", "/usr/local/bin/docker-php-start"]
