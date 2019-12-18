@@ -9,16 +9,16 @@ Para testar o aplicativo, use a configuração [docker-compose.yaml](docker-comp
 $ docker-compose build
 $ docker-compose up -d
 ```
-Acesse o navegador no endereço https://localhost:8081 para o sistema de FAQ.
-
-Acesse o navegador no endereço https://localhost:8081/admin/faq/question para o gerenciar as perguntas e respostas.
-
 
 #### Criar e popular o banco de dados
 ```sh
 $ docker-compose exec madeira-faq composer phinx migrate
 $ docker-compose exec madeira-faq composer phinx seed:run
 ```
+
+Acesse o navegador no endereço https://localhost:8081 para o sistema de FAQ.
+
+Acesse o navegador no endereço https://localhost:8081/admin/faq/question para o gerenciar as perguntas e respostas.
 
 #### Executar testes e gerar métricas do projeto
 ```sh
